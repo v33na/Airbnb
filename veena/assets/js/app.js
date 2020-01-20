@@ -36,12 +36,12 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
     // Step 4: Parse Data 
     //==============================
    // Create a function to parse date and time
-    var parseTime = d3.timeParse ("%-m/%-d/%Y");
+    var parseTime = d3.timeParse ("%Y/-m/%-d");
    
    //   // Format the data
     airbnbData.forEach(function(data) {
       //console.log(data.date)
-      data.date = parseTime(data.date);
+      //data.date = parseTime(data.date);
       //console.log(data.date)
       data.price = +data.price;
       console.log(data.date)
@@ -62,7 +62,7 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
     .range([height, 0]);
 
 // create axes
-  var bottomAxis = d3.axisBottom(xTimeScale).tickFormat(d3.timeFormat("%-m/%-d/%Y"));;
+  var bottomAxis = d3.axisBottom(xTimeScale).tickFormat(d3.timeFormat("%Y/%-m/%-d"));;
   var leftAxis = d3.axisLeft(yLinearScale);
    // append axes
   chartGroup.append("g")
@@ -78,8 +78,8 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
   // Scale the domain
    //var xMin;
    //var xMax;
-   var yMin;
-   var yMax;
+   //var yMin;
+   //var yMax;
    //var minDate = d3.min(airbnbData, function(d) { return d.date; });
     //minDate.setDate(minDate.getDate() - 1);
    //var maxDate = d3.max(airbnbData, function(d) { return d.date; });
@@ -99,17 +99,17 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
   //   return data.date ;
   //   });
 
-   yMin = d3.min(airbnbData, function(data) {
-     return +data.price * 0.02;
-     });
+  //  yMin = d3.min(airbnbData, function(data) {
+  //    return +data.price * 0.02;
+  //    });
 
-   yMax = d3.max(airbnbData, function(data) {
-     return +data.price * 0.04;
-     });
+  //  yMax = d3.max(airbnbData, function(data) {
+  //    return +data.price * 0.04;
+  //    });
 
-    //xLinearScale.domain([0, xMax]);
-   var yLinearScale = d3.scaleLinear().range([height, 0]);
-     yLinearScale.domain([yMin, yMax]);
+  //   //xLinearScale.domain([0, xMax]);
+  //  var yLinearScale = d3.scaleLinear().range([height, 0]);
+  //    yLinearScale.domain([yMin, yMax]);
    
     //  // Step 6: Create Axes
  //    // =============================================
@@ -127,8 +127,8 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
        });
     
   //  // Create tooltip
-  chartGroup.call(toolTip);
-  chartGroup.selectAll("circle")
+   chartGroup.call(toolTip);
+   chartGroup.selectAll("circle")
      .data(airbnbData)
      .enter()
      .append("circle")
