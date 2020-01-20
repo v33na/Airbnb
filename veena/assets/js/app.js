@@ -31,20 +31,20 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
 // Step 3:
 // Import data from the All_airbnb_listings.csv file
 // =================================
- d3.csv("assets/data/All_airbnb_listings.csv").then(function(airbnbData) {
+d3.csv("assets/data/All_airbnb_listings.csv").then(function(airbnbData) {
     //console.log(airbnbData)
     // Step 4: Parse Data 
     //==============================
    // Create a function to parse date and time
-    var parseTime = d3.timeParse ("%Y/-m/%-d");
+  var parseTime = d3.timeParse ("%Y/-m/%-d");
    
    //   // Format the data
-    airbnbData.forEach(function(data) {
+  airbnbData.forEach(function(data) {
       //console.log(data.date)
-      //data.date = parseTime(data.date);
-      //console.log(data.date)
-      data.price = +data.price;
-      console.log(data.date)
+      ////data.date = parseTime(data.date);
+     // //console.log(data.date)
+    data.price = +data.price;
+    //console.log(data.date)
      //console.log(data.price)
     });
     // Step 5: Create Scales
@@ -53,13 +53,21 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
      //var xLinearScale = d3.scaleLinear().range([0, width]);
    //var yLinearScale = d3.scaleLinear().range([height, 0]);
 // create scales
-  var xTimeScale = d3.scaleTime()
-    .domain(d3.extent(airbnbData, d => d.date))
-    .range([0, width]);
-
-  var yLinearScale = d3.scaleLinear()
-    .domain([0, d3.max(airbnbData, d => d.price)])
-    .range([height, 0]);
+  //  var xTimeScale = d3.scaleTime()
+  //   .domain([0, width])
+  //   .range(d3.extent(airbnbData, function(d) {
+  //    return d3.timeParse(d.date);
+  //   }));
+    
+     //.domain(d3.extent(airbnbData, d => d.date))
+     //.range([0, width]);
+   var xTimeScale = d3.scaleTime()
+     .domain([new Date("2016-01-01"), new Date("2019-01-01")])
+     .range([0, 600]);
+           
+   var yLinearScale = d3.scaleLinear()
+     .domain([0, d3.max(airbnbData, d => d.price)])
+     .range([height, 0]);
 
 // create axes
   var bottomAxis = d3.axisBottom(xTimeScale).tickFormat(d3.timeFormat("%Y/%-m/%-d"));;
@@ -123,7 +131,7 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
     .offset([80, -60])
     .html(function(d) {
      return (`<strong>${d.date}<strong><hr>${d.price}
-      Price over years`);
+      Avg. Price`);
        });
     
   //  // Create tooltip
@@ -164,14 +172,14 @@ d3.select(".chartGroup").append("div").attr("class", "tooltip").style("opacity",
          return yLinearScale(data.price - 0.2);
         })
         
-  // Append an SVG group for the xaxis, then display x-axis 
-   chartGroup
-     .append("g")
-     .attr('transform', `translate(0, ${height})`)
-     .call(bottomAxis);
+//   // Append an SVG group for the xaxis, then display x-axis 
+//    chartGroup
+//      .append("g")
+//      //.attr('transform', `translate(0, ${height})`)
+//      .call(bottomAxis);
 
-//  // Append a group for left-axis, then display it
-   chartGroup.append("g").call(leftAxis);
+// //  // Append a group for left-axis, then display it
+//    chartGroup.append("g").call(leftAxis);
   // Append left-axis label
    chartGroup
      .append("text")
