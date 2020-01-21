@@ -36,14 +36,14 @@ d3.csv("assets/data/All_airbnb_listings.csv").then(function(airbnbData) {
     // Step 4: Parse Data 
     //==============================
    // Create a function to parse date and time
-  var parseTime = d3.timeParse ("%Y/-m/%-d");
+  var parseTime = d3.timeParse ("%Y-%m-%d");
    
    //   // Format the data
   airbnbData.forEach(function(data) {
       //console.log(data.date)
-      ////data.date = parseTime(data.date);
-     // //console.log(data.date)
-    data.price = +data.price;
+      //data.date = parseTime(data.date);
+      //console.log(data.date)
+      data.price = +data.price;
     //console.log(data.date)
      //console.log(data.price)
     });
@@ -62,21 +62,23 @@ d3.csv("assets/data/All_airbnb_listings.csv").then(function(airbnbData) {
      //.domain(d3.extent(airbnbData, d => d.date))
      //.range([0, width]);
    var xTimeScale = d3.scaleTime()
-     .domain([new Date("2016-01-01"), new Date("2019-01-01")])
-     .range([0, 600]);
+     .domain([new Date("2015-01-01"), new Date("2019-12-31")])
+     .range([0, 1000]);
            
    var yLinearScale = d3.scaleLinear()
      .domain([0, d3.max(airbnbData, d => d.price)])
      .range([height, 0]);
 
 // create axes
-  var bottomAxis = d3.axisBottom(xTimeScale).tickFormat(d3.timeFormat("%Y/%-m/%-d"));;
+  var bottomAxis = d3.axisBottom(xTimeScale).tickFormat(d3.timeFormat("%Y-%m-%d"));;
   var leftAxis = d3.axisLeft(yLinearScale);
    // append axes
   chartGroup.append("g")
     .attr("transform", `translate(0, ${height})`)
+    .attr("class","bottomAxis")
     .call(bottomAxis);
   chartGroup.append("g")
+    .attr("class","leftAxis")
     .call(leftAxis);
 
  
